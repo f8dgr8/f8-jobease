@@ -6,6 +6,7 @@ from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from io import BytesIO
 import re
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -47,6 +48,10 @@ def create_docx(content, filename):
     doc.save(buffer)
     buffer.seek(0)
     return buffer
+
+@app.route('/')
+def home():
+    return jsonify({"message": "F8 JobEase API is running"})
 
 @app.route('/api/health')
 def health():
@@ -196,4 +201,5 @@ Include: role overview, technical skills, 15 questions, STAR examples, company r
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
