@@ -1,15 +1,20 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    }
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
+```
+
+5. Commit changes
+
+### Step 2: Create _redirects file
+
+1. Go back to root
+2. Click **`public`** folder
+3. Click **"Add file"** → **"Create new file"**
+4. Filename: **`_redirects`**
+5. Paste:
+```
+/api/* /api/:splat 200
+/* /index.html 200
